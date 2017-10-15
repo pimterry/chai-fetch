@@ -1,0 +1,47 @@
+{
+  "name": "chai-fetch",
+  "version": "0.1.0",
+  "description": "Chai matchers to make matching fetch responses clear & easy Edit",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "tsc -p src",
+    "pretest": "npm run build",
+    "test": "mocha -r ts-node/register 'test/*.spec.ts'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pimterry/chai-fetch.git"
+  },
+  "keywords": [
+    "fetch",
+    "chai",
+    "chai-plugin",
+    "assertions",
+    "node-fetch",
+    "fetch-polyfill",
+    "fetch-ponyfill",
+    "testing"
+  ],
+  "author": "Tim Perry <pimterry@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pimterry/chai-fetch/issues"
+  },
+  "homepage": "https://github.com/pimterry/chai-fetch#readme",
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.43",
+    "@types/node-fetch": "^1.6.7",
+    "chai": "^4.1.2",
+    "http-server-mock": "^0.2.0",
+    "mocha": "^4.0.1",
+    "node-fetch": "^1.7.3",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.3"
+  }
+}

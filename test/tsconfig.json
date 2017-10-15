@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "strict": true,
+        "lib": [
+            "dom",
+            "es5",
+            // Required for graphql (but it does actually bring its own polyfill)
+            "esnext.asynciterable"
+        ]
+    },
+    "include": [
+        "*.ts"
+    ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "chai-fetch",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Chai matchers to make matching fetch responses clear & easy Edit",
   "main": "dist/index.js",
   "types": "src/index.ts",

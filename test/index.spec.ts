@@ -22,12 +22,20 @@ describe('Chai-fetch', () => {
             await expect(response).to.have.responseText('matching body');
         });
 
-        it('should match responses regardless of status ', async () => {
+        it('should match responses regardless of status', async () => {
             await mockServer.get('/match').thenReply(503, 'matching body');
 
             let response = await fetch(mockServer.urlFor('/match'));
 
             await expect(response).to.have.responseText('matching body');
+        });
+
+        it('should match responses based on a regex', async () => {
+            await mockServer.get('/match').thenReply(503, 'matching body');
+
+            let response = await fetch(mockServer.urlFor('/match'));
+
+            await expect(response).to.have.responseText(/matching/);
         });
 
         it('should automatically wait for responses that are still promised', async () => {
@@ -46,6 +54,19 @@ describe('Chai-fetch', () => {
                 throw new AssertionError('Should not match non-matching bodies');
             } catch (e) {
                 expect(e.message).to.equal("expected response body to equal 'non-matching body' but was 'matching body'");
+            }
+        });
+
+        it("should reject responses that don't match the passed regex", async () => {
+            await mockServer.get('/non-match').thenReply(200, 'matching body');
+
+            let response = await fetch(mockServer.urlFor('/non-match'));
+
+            try {
+                await expect(response).to.have.responseText(/non-matching/);
+                throw new AssertionError('Should not match non-matching bodies');
+            } catch (e) {
+                expect(e.message).to.equal("expected response body to match /non-matching/ but was 'matching body'");
             }
         });
 
@@ -77,6 +98,14 @@ describe('Chai-fetch', () => {
             } catch (e) {
                 expect(e.message).to.equal("expected response body not to equal 'matching body' but was 'matching body'");
             }
+        });
+
+        it('should not match responses based on a regex', async () => {
+            await mockServer.get('/match').thenReply(503, 'matching body');
+
+            let response = await fetch(mockServer.urlFor('/match'));
+
+            await expect(response).not.to.have.responseText(/non-matching/);
         });
 
         it('should reject responses that fail', async () => {

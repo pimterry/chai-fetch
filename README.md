@@ -72,7 +72,9 @@ e.g. `expect(fetch('http://example.com')).to.have.responseText('hi there')`
 If the object being tested is a fetch response, or a promise for a fetch response, this asserts that the full text
 of the body is equal to the text given.
 
-This does _not_ test the status code (just like fetch itself doesn't), but will fail if a passed response
-promise is rejected (e.g. if you have a network error).
+You can also pass a regular expression: `.responseText(/match a substring/)`.
+
+This does _not_ test the status code (just like fetch itself doesn't), but both normal and negated tests will fail
+if a passed response promise is rejected entirely (e.g. if you have a network error).
 
 ### More to come (file an issue!)

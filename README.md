@@ -47,6 +47,9 @@ describe('Chai-fetch', () => {
 
 ## Tips
 
+* Remember that the assertions here are all asynchronous, so you need to `return` or `.then` or `await` on them, to
+  ensure that your test framework waits for the result and catches failures.
+
 * Take a look at [http-server-mock](https://github.com/pimterry/http-server-mock) to mock your server responses.
 
 * If you're writing HTTP tests like this, and you're using Babel, TypeScript or just some very modern JS engines,

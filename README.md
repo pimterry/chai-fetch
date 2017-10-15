@@ -1,4 +1,4 @@
-# chai-fetch
+# chai-fetch [![Travis Build Status](https://img.shields.io/travis/pimterry/chai-fetch.svg)](https://travis-ci.org/pimterry/chai-fetch)
 
 Chai matchers to make matching fetch responses clear &amp; easy
 

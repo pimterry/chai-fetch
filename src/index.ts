@@ -13,6 +13,9 @@ export = function chaiFetch(chai: any) {
         let response = await target;
         let responseText = await response.text();
 
-        return chai.expect(responseText).to.equal(expectedText);
+        let expectedMessage    = 'expected response body to equal #{exp} but was #{act}';
+        let notExpectedMessage = 'expected response body not to equal #{exp} but was #{act}';
+
+        this.assert(responseText === expectedText, expectedMessage, notExpectedMessage, expectedText, responseText);
     });
 }

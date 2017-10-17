@@ -112,9 +112,57 @@ describe('Chai-fetch', () => {
                     await expect(
                         fetch('http://non-existent-url-that-wont-resolve.test')
                     ).not.to.have.responseText('non-matching body');
-                    throw new Error('Should reject totally failing requests!');
+                    throw new AssertionError('Should reject totally failing requests!');
                 } catch (e) {
                     expect(e.name).to.equal('FetchError');
+                }
+            });
+        });
+    });
+
+    describe(".status", () => {
+        it('should match responses with the correct status', async () => {
+            await mockServer.get('/200').thenReply(200);
+
+            let response = await fetch(mockServer.urlFor('/200'));
+
+            await expect(response).to.have.status(200);
+        });
+
+        it('should not match responses with the incorrect status', async () => {
+            await mockServer.get('/500').thenReply(500);
+
+            try {
+                await expect(
+                    fetch(mockServer.urlFor('/500'))
+                ).to.have.status(200);
+
+                throw new Error('Should reject non-matching status!');
+            } catch (e) {
+                expect(e.message).to.equal("expected status to equal 200 but was 500");
+            }
+        });
+
+        describe('negated', () => {
+            it('should match responses with a non-matching status', async () => {
+                await mockServer.get('/500').thenReply(500);
+
+                let response = await fetch(mockServer.urlFor('/500'));
+
+                await expect(response).not.to.have.status(200)
+            });
+
+            it('should not match responses with the matching status', async () => {
+                await mockServer.get('/200').thenReply(200);
+    
+                try {
+                    await expect(
+                        fetch(mockServer.urlFor('/200'))
+                    ).not.to.have.status(200);
+    
+                    throw new Error('Should reject matching status!');
+                } catch (e) {
+                    expect(e.message).to.equal("expected status not to equal 200 but was 200");
                 }
             });
         });

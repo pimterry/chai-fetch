@@ -2,6 +2,7 @@ declare global {
     export namespace Chai {
         interface Assertion {
             responseText(expectedText: string | RegExp): Promise<void>;
+            status(expectedStatus: number): Promise<void>;
         }
     }
 }
@@ -28,5 +29,17 @@ export = function chaiFetch(chai: any) {
         }
 
         this.assert(result, expectedMessage, notExpectedMessage, expectedText, responseText);
+    });
+
+    chai.Assertion.addMethod('status', async function (this: any, expectedStatus: number) {
+        let target: Response | Promise<Response> = this._obj;
+
+        let response = await target;
+
+        let result = response.status === expectedStatus;
+        let expectedMessage = 'expected status to equal #{exp} but was #{act}';
+        let notExpectedMessage = 'expected status not to equal #{exp} but was #{act}';
+
+        this.assert(result, expectedMessage, notExpectedMessage, expectedStatus, response.status);
     });
 }

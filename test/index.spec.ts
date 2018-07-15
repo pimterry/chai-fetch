@@ -1,6 +1,7 @@
-// TODO: This should become a normal import once HSM type publishing is working
-const mockServer = require('http-server-mock').getLocal();
+import * as mockttp from 'mockttp';
 import fetch from 'node-fetch';
+
+const mockServer = mockttp.getLocal();
 
 import chai = require('chai');
 import chaiFetch = require('..');
@@ -154,12 +155,12 @@ describe('Chai-fetch', () => {
 
             it('should not match responses with the matching status', async () => {
                 await mockServer.get('/200').thenReply(200);
-    
+
                 try {
                     await expect(
                         fetch(mockServer.urlFor('/200'))
                     ).not.to.have.status(200);
-    
+
                     throw new Error('Should reject matching status!');
                 } catch (e) {
                     expect(e.message).to.equal("expected status not to equal 200 but was 200");
